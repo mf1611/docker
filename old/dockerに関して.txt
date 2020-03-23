@@ -1,0 +1,37 @@
+■docker環境構築
+(参考)https://amalog.hateblo.jp/entry/data-analysis-docker
+
+１．dockerインストール
+$ sudo apt-get update
+$ apt-get install docker
+$ apt-get install docker-compose
+
+# version確認
+$ docker --version
+$ docker-compose --version
+
+２．環境構築
+Dockerfile
+docker-compose.yml
+.dockerignore
+を作成
+
+●Dockerfile
+# kaggleのpython環境をベースにする
+FROM gcr.io/kaggle-images/python:v56
+
+# ライブラリの追加インストール
+RUN pip install -U pip && \
+    pip install fastprogress japanize-matplotlib
+    
+●docker-compose.yml
+version: "3"
+services:
+  jupyter:
+  build: .
+  volumes:
+      - $PWD:/tmp/working
+    working_dir: /tmp/working
+    ports:
+      - 8888:8888
+    command: jupyter notebook --ip=0.0.0.0 --allow-root --no-browser

@@ -1,0 +1,9 @@
+version: "3"
+services:
+  analysis:
+    build: .
+    volumes:
+      - /home/fmasashi1611/M5:/mnt
+    working_dir: /mnt
+    ports:
+      - 8888:8888

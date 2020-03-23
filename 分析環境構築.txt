@@ -1,0 +1,134 @@
+◆Ubuntu18.04がベース
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+1. Dockerのインストール
+・dockerのインストール
+https://docs.docker.com/install/linux/docker-ce/ubuntu/
+
+最終的に、下記で確認
+$ docker --version
+
+・docker-composeのインストール
+https://docs.docker.com/compose/install/
+
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+$ sudo chmod +x /usr/local/bin/docker-compose
+
+$ docker-compose --version
+
+・sudoなしで、docker実行できるようにする
+
+# 現行ユーザをdockerグループに所属させる
+sudo gpasswd -a $USER docker
+
+# dockerデーモンを再起動する (CentOS7の場合)
+sudo systemctl restart docker
+
+# exitして再ログインすると反映される。
+exit
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+2. Dockerfileの作成
+
+基本的には、何かのベースを決める
+そして、追加のライブラリをインスールしていく
+
+3. docker-compose.yamlを作成
+コンテナを起動する際の設定を記載
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+4. 環境を構築
+$ docker-compose up --build
+
+
+イメージを確認
+$ docker images
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+
+5. コンテナを作成
+$ docker run -it -d -p 8888:8888 -v /home/fmasashi1611/recsys:/mnt  --name (コンテナ名 (使用イメージ名):(タグ名)
+
+
+docker run -it -d -p 8888:8888 -v /home/m-fuj/M5:/mnt  --name m5 docker_analysis:latest
+
+
+[[注意]]
+# 注意で、-pのところで、ポートフォワードしていて、上の場合は、
+localhost:8888にアクセスすることで、リモート上の8888で起動しているアプリに接続できる
+↑
+ただし、今ssh先からなので、sshでログインする際にも、また
+$ ssh -L 8888:localhost:8888 m-fuj@35.233.156.130
+として、ポートフォワードしてログインする必要がある！！
+
+
+・コンテナを確認
+$ docker ps -a
+
+・コンテナの中に入る
+$ docker attach コンテナ名/ID名
+
+・コンテナから出る
+$ exit
+
+-------------------------------
+他のコマンド
+$ docker stop コンテナ名/ID名
+$ docker start コンテナ名/ID名
+$ docker rm コンテナ名/ID名
+
+$ docker rmi イメージ名/ID名
+-------------------------------
+
+
+・jupyterを起動
+$ jupyter notebook --ip=0.0.0.0 --allow-root --no-browser
+
+
+
+
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+
+◆良く分かってないところ（3/22）
+・ssh先のdockerに、vscodeでリモートアクセスするやり方
+https://qiita.com/kanosawa/items/07e26edb19c86091fa48
+上のやり方で出来るらしいが、なぜか出来ない
+→　事前にローカル（WindowsやMac）上でも、Dockerをインストールしておく？
+→　windows10 homeだと、通常のDockerは入れられない（→docker-toolboxを代わりに入れるらしいが、）
+→　docker-toolboxもうまく入らない
+　　Error with pre-create check: "This computer doesn't have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory"
+　　
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+◆kaggle API利用
+1. 別個に、kaggle.jsonをDL (kaggle.com > My Account > Create New API Tokenボタン)
+2. コンテナ内に入る
+$ mkdir ~/.kaggle
+$ touch ~/.kaggle/kaggle.json
+$ vi ~/.kaggle/kaggle.json  # 上記のkaggle.jsonをコピペ
+
+$ chmod 600 ~/.kaggle/kaggle.json
+
+$ kaggle apiコマンドでダウンロード
+
+$ unzip zipファイル

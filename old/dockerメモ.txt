@@ -1,0 +1,106 @@
+■docker
+
+・Imageは，元となるimageファイル
+$ sudo docker images
+
+Imageを利用して，containerを起動させる
+→ その時に，名前やcontainer IDが付与される
+
+・一回出来たcontainerは，startとstopで起動，停止ができる
+$ sudo docker start [コンテナ名 or コンテナID]
+$ sudo docker stop [コンテナ名 or コンテナID]
+
+・起動しているコンテナを確認
+$ sudo docker ps
+
+停止しているものも含めて確認
+$ sudo docker ps -a
+
+
+・起動しているコンテナの中に入る
+$ sudo docker exec -it [コンテナ名 or コンテナID] /bin/bash
+
+
+・色々いじったコンテナのイメージを作る
+$ sudo docker commit nvidia-anaconda nvidia-anaconda-torch:latest
+
+
+############################################################################
+
+●ローカルからjupyterにアクセスしたい場合
+$ sudo nvidia-docker run -it -d -p 8888:8888 -v /home/fujitsuka/recommend:/mnt --name recommend0708 cuda9.0_org:latest
+
+-p 8888:8888
+で，Dockerコンテナ内の localhost:8888を手元のlocalhost:8888につなぐことができる
+https://amalog.hateblo.jp/entry/data-analysis-docker
+
+●docker上で，
+$ jupyter notebook --ip=0.0.0.0 --allow-root --no-browser
+
+--ip=0.0.0.0は起動したJupyter Notebookにコンテナ外からアクセスできるようにするオプション
+
+--allow-rootはルートでの実行を許可するオプションです。Dockerコンテナはデフォルトでルート権限で起動するので、このオプションが必要
+
+--no-browserはJupyter Notebook起動時にブラウザを立ち上げないオプション
+
+
+#########################
+
+$ sudo docker run -it -d -p 8888:8888 -v /home/fmasashi_16/CHAMPS:/mnt --name kaggle07
+09 kaggle:latest
+
+
+
+
+##########################################################################
+##########################################################################
+
+・さくらのナレッジ
+
+
+・Dockerfile
+FROM image
+RUN pip install
+CMD
+↓
+Dockerfile build -t イメージ名 .
+で，Imageが出来る
+
+
+$ docker exec  # processが１つあがる 
+
+
+
+########################################
+
+
+$ gcloud compute ssh --zone "us-west1-b" "instance-kaggle" -- -L 28888:localhost:8888
+
+
+
+##########################################################################
+
+Decokerfileを作成して，
+$ docker build . -t (イメージ名):(タグ名)
+
+docker run -it -d -p 8888:8888 -v /home/fmasashi_16/IEEE:/mnt  --name (コンテナ名) (使用イメージ名):(タグ名)
+
+###########################################################################
+
+1-1. 使用方法
+「base.yaml」ファイルを編集して、必要なパッケージを追加
+Docker イメージをビルド
+docker build -t cuda9.0-jupyter cuda9.0-jupyter
+（高セキュア環境に持っていく場合）イメージをエクスポート、USBメモリに書き出し
+docker save -o cuda9.0-jupyter.tar cuda9.0-jupyter
+（高セキュア環境に持っていく場合）イメージをインポート
+docker load <　cuda9.0-jupyter.tar
+コンテナを起動（GPUありの場合）
+nvidia-docker run -v /mnt/DATA:/project -p 8888:8888 cuda9.0-jupyter
+
+
+###################################
+
+nvidia-docker run -v ~/project/Embedding/:/mnt -p 8888:8888 cuda9.0-jupyter
+
+jupyter notebook --ip=0.0.0.0 --allow-root --no-browser

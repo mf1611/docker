@@ -1,0 +1,35 @@
+簡単な使用方法（9/23）
+
+・Dockerfileを作成
+例えば，minicondaのイメージを基に，必要なライブラリだけcondaとpipで入れる
+
+・dockerのimageをbuild
+Dockerfileがあるディレクトリ上で，
+$ docker build . -t (イメージ名):(タグ名)
+
+・確認
+$ docker images
+
+・コンテナを作成
+$ docker run -it -d -p 8888:8888 -v /home/fmasashi_16/IEEE:/mnt  --name (コンテナ名) (使用イメージ名):(タグ名)
+
+・確認
+$ docker ps -a
+
+・dockerの中に入る
+$ docker attach (コンテナID）
+
+・dockerから出る
+$ exit
+
+
+・jupyterを起動
+$ jupyter notebook --ip=0.0.0.0 --allow-root --no-browser
+
+
+●GCPにSSHで接続，ローカル上で，
+$ gcloud compute ssh --zone "us-west1-b" "instance-kaggle" -- -L 28888:localhost:8888
+
+
+・停止したコンテナを起動
+$ docker start (コンテナ名)
