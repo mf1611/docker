@@ -47,7 +47,7 @@ exit
 $ docker-compose up --build
 
 もしくは
-
+$ docker build ./ -t IMAGENAME
 
 イメージを確認
 $ docker images
