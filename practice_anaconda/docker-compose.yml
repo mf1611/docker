@@ -1,0 +1,9 @@
+version: "3"
+services:
+  anaconda:
+    build: .
+    volumes:
+      - $PWD:/tmp/working
+    working_dir: /tmp/working
+    ports:
+      - 8888:8888
