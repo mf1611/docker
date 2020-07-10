@@ -1,0 +1,27 @@
+# イメージ作成
+# 同一ディレクトリに，Dockerfileがある前提で
+$ docker build ./ -t IMAGENAME
+
+# コンテナ作成
+$ docker run -it -d -p 8888:8888 -v $PWD:/project  --name wheatdet_v1 docker_base:latest
+
+# コンテナ起動
+$ docker start wheatdet_v1
+
+# コンテナの中に入る
+$ docker attach wheatdet_v1
+
+# コンテナ停止
+$ docker stop wheatdet_v1
+
+############################
+
+# コンテナ内でjupyterを起動
+$ jupyter notebook --ip=0.0.0.0 --allow-root --no-browser
+
+⇨ ブラウザで，localhost:8888にアクセス
+
+
+# vscodeでコンテナにリモートアクセス
+左下の"><"で，
+Remote - Containers: Attach to Running Container…を選択
