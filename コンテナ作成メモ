@@ -1,6 +1,6 @@
 # イメージ作成
 # 同一ディレクトリに，Dockerfileがある前提で
-$ docker build ./ -t [IMAGE_NAME]
+$ docker build --no-cache ./ -t [IMAGE_NAME]
 
 # コンテナ作成
 $ docker run -it -d -p 8888:8888 -v $PWD:/project  --name [CONTAINER_NAME] [IMAGEN_AME]:[TAG]
