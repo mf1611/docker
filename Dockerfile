@@ -1,14 +1,14 @@
-# kaggle‚ÌpythonŠÂ‹«‚ğƒx[ƒX‚É‚·‚é
+# kaggleã®pythonç’°å¢ƒã‚’ãƒ™ãƒ¼ã‚¹ã«ã™ã‚‹
 FROM gcr.io/kaggle-images/python:v74
 
-# ƒ‰ƒCƒuƒ‰ƒŠ‚Ì’Ç‰ÁƒCƒ“ƒXƒg[ƒ‹
+# ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®è¿½åŠ ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 RUN pip install -U pip \
     && pip install fastprogress \
     && pip install japanize-matplotlib \
     && pip install dgl 
 
 
-# mecab‚Æmecab-ipadic-NEologd‚Ì“±“ü
+# mecabã¨mecab-ipadic-NEologdã®å°å…¥
 RUN apt-get update \
     && apt-get install -y mecab \
     && apt-get install -y libmecab-dev \
@@ -26,3 +26,6 @@ RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
     && bin/install-mecab-ipadic-neologd -n -y
 
 RUN pip install mecab-python3
+
+# jupyterã®è¨­å®š
+COPY jupyter_notebook_config.py /root/.jupyter/
