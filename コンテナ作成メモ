@@ -1,22 +1,25 @@
 # イメージ作成
 # 同一ディレクトリに，Dockerfileがある前提で
-$ docker build ./ -t IMAGENAME
+$ docker build ./ -t [IMAGE_NAME]
 
 # コンテナ作成
-$ docker run -it -d -p 8888:8888 -v $PWD:/project  --name wheatdet_v1 docker_base:latest
+$ docker run -it -d -p 8888:8888 -v $PWD:/project  --name [CONTAINER_NAME] [IMAGEN_AME]:[TAG]
 
 # コンテナ起動
-$ docker start wheatdet_v1
+$ docker start [CONTAINER_NAME]
 
 # コンテナの中に入る
-$ docker attach wheatdet_v1
+$ docker attach [CONTAINER_NAME]
 
 # コンテナ停止
-$ docker stop wheatdet_v1
+$ docker stop [CONTAINER_NAME]
 
 ############################
 
 # コンテナ内でjupyterを起動
+$ jupyter notebook
+
+# もし，jupyter_config設定していなかったら，
 $ jupyter notebook --ip=0.0.0.0 --allow-root --no-browser
 
 ⇨ ブラウザで，localhost:8888にアクセス
