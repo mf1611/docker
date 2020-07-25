@@ -5,7 +5,9 @@ FROM gcr.io/kaggle-images/python:v74
 RUN pip install -U pip \
     && pip install fastprogress \
     && pip install japanize-matplotlib \
-    && pip install dgl 
+    && pip install dgl \
+    && pip install transformers \
+    && pip install mlflow
 
 
 # mecabとmecab-ipadic-NEologdの導入
