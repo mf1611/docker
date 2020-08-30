@@ -1,9 +1,11 @@
 version: "3"
 services:
-  analysis:
-    build: .
+  jupyter:  # 立ち上げるサービスの名称(コンテナ名を指定しない場合，これが利用される)
+    image: kaggle_base:latest  # imageの指定
+    container_name: practice  # コンテナ名
     volumes:
-      - /home/fmasashi1611/M5:/mnt
-    working_dir: /mnt
+      - $PWD:/project
+    working_dir: /project/
     ports:
-      - 8888:8888
+      - 9999:8888
+    command: jupyter notebook
